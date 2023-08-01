@@ -57,7 +57,7 @@
   display: none;
 }
 
-/* The Modal (background) */
+/* Background of the messagebox */
 .messagebox {
   display: none;
   position: fixed;
@@ -74,7 +74,7 @@
   font-size: 20px;
 }
 
-/* Modal Content */
+/* Content of the messagebox */
 .messagebox-content {
   position: relative;
   background-color: #f0f0f0;
@@ -89,7 +89,7 @@
   border-radius: 12px;
 }
 
-/* Add Animation */
+/* Adding animation to the messagebox */
 @-webkit-keyframes animatetop {
   from {top:-300px; opacity:0} 
   to {top:0; opacity:1}
@@ -100,7 +100,7 @@
   to {top:0; opacity:1}
 }
 
-/* The Close Button */
+/* The close button of the messagebox */
 .messagebox-close {
   color: white;
   float: right;
