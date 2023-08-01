@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HPGL Viewer</title>
+  <link rel="stylesheet" href="HPGLViewer.css">
+  <script src="HPGLViewer.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <div class="div-header" id="header">
+    <h1 id="file-name-header">HPGL Viewer</h1>
+  </div>
+
+  <!-- Drawing area -->
+  <canvas id="canvas"></canvas>
+  
+  <!-- Footer -->
+  <div class="div-footer" id="footer">
+    <button for="file-input" id="open-file-button" class="button button-blue">Open a file...</button>
+    <input type="file" id="file-input" class="input-hidden" />
+  </div>
+
+  <!-- The Modal -->
+  <div id="messageBox" class="messagebox">
+
+    <!-- Modal content -->
+    <div class="messagebox-content">
+      <div class="messagebox-header">
+        <span class="messagebox-close">&times;</span>
+        <h2 id="messageBoxCaption">Warning</h2>
+      </div>
+      <div class="messagebox-body">
+        <p id="messageBoxText"></p>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

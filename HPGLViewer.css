@@ -1,0 +1,131 @@
+.div-header {
+  margin: 10px;
+  margin-bottom: 0px;
+  padding: 10px;
+  background-color: rgb(161, 201, 178);
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#canvas {
+  background-color: black;
+  margin: 10px;
+  margin-top: 0px;
+  padding: 0px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.div-footer {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  background-color: white;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 0px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 12px;
+  float: none;
+}
+
+.button-blue {
+  background-color: #008CBA;
+}
+
+.button-blue:hover {
+  background-color: #40add1;
+}
+
+.input-hidden {
+  display: none;
+}
+
+/* The Modal (background) */
+.messagebox {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 200px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  font-family: Arial;
+  font-size: 20px;
+}
+
+/* Modal Content */
+.messagebox-content {
+  position: relative;
+  background-color: #f0f0f0;
+  margin: auto;
+  padding: 0;
+  width: 50%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+  border-radius: 12px;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.messagebox-close {
+  color: white;
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.messagebox-close:hover,
+.messagebox-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.messagebox-header {
+  padding: 2px 16px;
+  background-color:  #5ca4b8;
+  color: white;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  font-size: 16px;
+}
+
+.messagebox-body {
+  padding: 2px 16px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
