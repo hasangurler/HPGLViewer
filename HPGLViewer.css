@@ -1,3 +1,4 @@
+/* Page header */
 .div-header {
   margin: 10px;
   margin-bottom: 0px;
@@ -11,6 +12,7 @@
   border-bottom-right-radius: 0px;
 }
 
+/* Canvas for drawing */
 #canvas {
   background-color: black;
   margin: 10px;
@@ -20,6 +22,7 @@
   border-bottom-right-radius: 10px;
 }
 
+/* Page footer */
 .div-footer {
   margin-left: 10px;
   margin-right: 10px;
@@ -31,6 +34,7 @@
   border-radius: 10px;
 }
 
+/* Button */
 .button {
   border: none;
   color: white;
@@ -45,6 +49,7 @@
   float: none;
 }
 
+/* Blue button */
 .button-blue {
   background-color: #008CBA;
 }
@@ -57,7 +62,7 @@
   display: none;
 }
 
-/* Background of the messagebox */
+/* Message box background */
 .messagebox {
   display: none;
   position: fixed;
@@ -74,7 +79,7 @@
   font-size: 20px;
 }
 
-/* Content of the messagebox */
+/* Message box content */
 .messagebox-content {
   position: relative;
   background-color: #f0f0f0;
@@ -82,25 +87,25 @@
   padding: 0;
   width: 50%;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
+  -webkit-animation-name: messagebox-animation;
   -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
+  animation-name: messagebox-animation;
   animation-duration: 0.4s;
   border-radius: 12px;
 }
 
-/* Adding animation to the messagebox */
-@-webkit-keyframes animatetop {
+/* Message box animation */
+@-webkit-keyframes messagebox-animation {
   from {top:-300px; opacity:0} 
   to {top:0; opacity:1}
 }
 
-@keyframes animatetop {
+@keyframes messagebox-animation {
   from {top:-300px; opacity:0}
   to {top:0; opacity:1}
 }
 
-/* The close button of the messagebox */
+/* Message box close button */
 .messagebox-close {
   color: white;
   float: right;
@@ -115,6 +120,7 @@
   cursor: pointer;
 }
 
+/* Message box header */
 .messagebox-header {
   padding: 2px 16px;
   background-color:  #5ca4b8;
@@ -124,6 +130,7 @@
   font-size: 16px;
 }
 
+/* Message box body */
 .messagebox-body {
   padding: 2px 16px;
   border-bottom-left-radius: 12px;

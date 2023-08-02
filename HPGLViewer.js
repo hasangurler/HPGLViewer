@@ -72,11 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // View only HPGL or PLT files.
-    let fileNameParameters = file.name.split('.');
+    let fileNameParameters = fileName.split('.');
     let fileExtension = fileNameParameters[fileNameParameters.length - 1].toUpperCase();
     
     if (fileExtension === "HPGL" || fileExtension === "PLT") {
-      document.querySelector('#file-name-header').innerHTML = "HPGL Viewer - " + file.name;
+      document.querySelector('#file-name-header').innerHTML = "HPGL Viewer - " + fileName;
 
       let reader = new FileReader();
       reader.readAsText(file);
