@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
   canvas.height = window.innerHeight - header.offsetHeight - footer.offsetHeight - 55;
   canvas.width = header.offsetWidth - canvasPadding * 2;
 
-  // Event lstener for resizing.
+  // Event listener for resizing.
   window.addEventListener('resize', function(e) {
     canvas.height = window.innerHeight - header.offsetHeight - footer.offsetHeight - 55;
     canvas.width = header.offsetWidth - canvasPadding * 2;
@@ -477,38 +477,24 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function selectColor(colorCode) {
-    if (colorCode === '1') {
-      return "lightgreen";
+    if (colorCode > 10) {
+      colorCode = 0;
     }
-    else if (colorCode === '2') {
-      return "purple";
-    }
-    else if (colorCode === '3') {
-      return "yellow";
-    }
-    else if (colorCode === '4') {
-      return "skyblue";
-    }
-    else if (colorCode === '5') {
-      return "deepskyblue";
-    }
-    else if (colorCode === '6') {
-      return "blue";
-    }
-    else if (colorCode === '7') {
-      return "orange";
-    }
-    else if (colorCode === '8') {
-      return "salmon";
-    }
-    else if (colorCode === '9') {
-      return "red";
-    }
-    else if (colorCode === '10') {
-      return "tan";
-    }
-    else {
-      return "white";
-    }
+
+    colorString = {
+      0: "white",
+      1: "lightgreen",
+      2: "purple",
+      3: "yellow",
+      4: "skyblue",
+      5: "deepskyblue",
+      6: "blue",
+      7: "orange",
+      8: "salmon",
+      9: "red",
+      10: "tan"
+    };
+
+    return colorString[colorCode];
   }
 })
