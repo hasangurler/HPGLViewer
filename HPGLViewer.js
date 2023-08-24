@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
       };
     }
     else {
+      // Display a warning message for other file types.
       let message = fileExtension + " files are not supported.";
       message += " Only HPGL and PLT files can be viewed!";
       messageBoxText.innerHTML = message;
@@ -111,24 +112,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Get mouse position relative to canvas.
-  function getMousePos(canvas, e) {
-    let rect = canvas.getBoundingClientRect();
+  // Get mouse position relative to given HTML element.
+  function getMousePos(element, e, padding) {
+    let rect = element.getBoundingClientRect();
     return {
-      x: e.clientX - rect.left - canvasPadding,
-      y: e.clientY - rect.top - canvasPadding
+      x: e.clientX - rect.left - padding,
+      y: e.clientY - rect.top - padding
     };
   }
 
-  // Get padding value of an HTML item.
-  function getPadding(item)
+  // Get padding value of given HTML element.
+  function getPadding(element)
   {
-    let paddingString = window.getComputedStyle(item, null).getPropertyValue('padding');
+    let paddingString = window.getComputedStyle(element, null).getPropertyValue('padding');
     let paddingStringWithoutPx = paddingString.substring(0,paddingString.length - 2);
     return parseInt(paddingStringWithoutPx);
   }
 
-  // Mouse wheel event.
+  // Mouse wheel event listener.
   canvas.addEventListener('wheel', function(e) {
     let oldScale = scale;
 
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		  scale *= 1.1;
     }
 
-    let pos = getMousePos(canvas, e);
+    let pos = getMousePos(canvas, e, getPadding(canvas));
     pos.y = canvas.height - pos.y;
     offsetX = pos.x - (pos.x - offsetX) * oldScale / scale;
     offsetY = pos.y - (pos.y - offsetY) * oldScale / scale;
@@ -149,27 +150,27 @@ document.addEventListener('DOMContentLoaded', function() {
     draw();
   })
 
-  // Mouse double click event.
+  // Mouse double click event listener.
   canvas.ondblclick = () => {
     fitToScreen();
   }
 
-  // Mouse down event.
+  // Mouse down event listener.
   canvas.onmousedown = e => {
     if (e.button === 0) {
       // Mouse left button is down.
       mouseLeftButton = true;
-      previousPos = getMousePos(canvas, e);
+      previousPos = getMousePos(canvas, e, getPadding(canvas));
     }
     else if (e.button === 2) {
       // Mouse right button is down.
       mouseRightButton = true;
-	    startPos = getMousePos(canvas, e);
+	    startPos = getMousePos(canvas, e, getPadding(canvas));
 	    endPos = startPos;
     }
   }
 
-  // Mouse up event.
+  // Mouse up event listener.
   canvas.onmouseup = e => {
     if (e.button === 0) {
       // Mouse left button is up.
@@ -223,13 +224,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Mouse move event.
+  // Mouse move event listener.
   canvas.onmousemove = e => {
     if (fileName === "") {
       return;
     }
 
-    let pos = getMousePos(canvas, e);
+    let pos = getMousePos(canvas, e, getPadding(canvas));
 
     if (mouseLeftButton === true) {
       // Mouse is moving while mouse left button is down.
