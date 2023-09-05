@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
   let previousPos;
   let startPos;
   let endPos;
-  let canvasPadding = getPadding(canvas);
+  const canvasPadding = getPadding(canvas);
   let fileName = "";
 
-  let paths = {
+  const paths = {
     pathCount: 0,
     totalPointCount: 0,
     colorCode: [],
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     y: []
   };
   
-  let origin = {
+  const origin = {
     pathCount: 0,
     totalPointCount: 0,
     colorCode: [],
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Read the file.
   function readFile(e) {
-    let file = e.target.files[0];
+    const file = e.target.files[0];
     fileName = file.name;
 
     if (!file) {
@@ -72,17 +72,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // View only HPGL or PLT files.
-    let fileNameParameters = fileName.split('.');
-    let fileExtension = fileNameParameters[fileNameParameters.length - 1].toUpperCase();
+    const fileNameParameters = fileName.split('.');
+    const fileExtension = fileNameParameters[fileNameParameters.length - 1].toUpperCase();
     
     if (fileExtension === "HPGL" || fileExtension === "PLT") {
-      document.querySelector('#file-name-header').innerHTML = "HPGL Viewer - " + fileName;
+      let caption = "HPGL Viewer - ";
+      caption = caption.concat(fileName);
+      document.querySelector('#file-name-header').innerHTML = caption;
 
-      let reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsText(file);
       
       reader.onload = function(e) {
-        let contents = e.target.result;
+        const contents = e.target.result;
         getPaths(contents);
         fitToScreen();
       };
@@ -114,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Get mouse position relative to given HTML element.
   function getMousePos(element, e, padding) {
-    let rect = element.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     return {
       x: e.clientX - rect.left - padding,
       y: e.clientY - rect.top - padding
@@ -124,14 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Get padding value of given HTML element.
   function getPadding(element)
   {
-    let paddingString = window.getComputedStyle(element, null).getPropertyValue('padding');
-    let paddingStringWithoutPx = paddingString.substring(0,paddingString.length - 2);
+    const paddingString = window.getComputedStyle(element, null).getPropertyValue('padding');
+    const paddingStringWithoutPx = paddingString.substring(0,paddingString.length - 2);
     return parseInt(paddingStringWithoutPx);
   }
 
   // Mouse wheel event listener.
   canvas.addEventListener('wheel', function(e) {
-    let oldScale = scale;
+    const oldScale = scale;
 
     if (e.deltaY < 0) {
       // Zoom in.
@@ -142,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		  scale *= 1.1;
     }
 
-    let pos = getMousePos(canvas, e, getPadding(canvas));
+    const pos = getMousePos(canvas, e, canvasPadding);
     pos.y = canvas.height - pos.y;
     offsetX = pos.x - (pos.x - offsetX) * oldScale / scale;
     offsetY = pos.y - (pos.y - offsetY) * oldScale / scale;
@@ -160,12 +162,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.button === 0) {
       // Mouse left button is down.
       mouseLeftButton = true;
-      previousPos = getMousePos(canvas, e, getPadding(canvas));
+      previousPos = getMousePos(canvas, e, canvasPadding);
     }
     else if (e.button === 2) {
       // Mouse right button is down.
       mouseRightButton = true;
-	    startPos = getMousePos(canvas, e, getPadding(canvas));
+	    startPos = getMousePos(canvas, e, canvasPadding);
 	    endPos = startPos;
     }
   }
@@ -202,11 +204,11 @@ document.addEventListener('DOMContentLoaded', function() {
           y2 = startPos.y;
         }
 
-        let zoomWidth = x2 - x1;
-        let zoomHeight = y2 - y1;
-        let scaleX = canvas.width / zoomWidth;
-        let scaleY = canvas.height / zoomHeight;
-        let oldScale = scale;
+        const zoomWidth = x2 - x1;
+        const zoomHeight = y2 - y1;
+        const scaleX = canvas.width / zoomWidth;
+        const scaleY = canvas.height / zoomHeight;
+        const oldScale = scale;
 
         if(scaleX < scaleY)
         {
@@ -230,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    let pos = getMousePos(canvas, e, getPadding(canvas));
+    const pos = getMousePos(canvas, e, canvasPadding);
 
     if (mouseLeftButton === true) {
       // Mouse is moving while mouse left button is down.
@@ -261,15 +263,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // CAD utilities.
   function getPaths(contents) {
-    let lines = contents.split('\n');
+    const lines = contents.split('\n');
     let currentColorCode = 0;
     paths.totalPointCount = 0;
     paths.pathCount = 0;
 
     for (let i = 0; i < lines.length; i++)
     {
-      let line = lines[i];
-      let parms = line.split(/[PUDNSFL,;]/);
+      const line = lines[i];
+      const parms = line.split(/[PUDNSFL,;]/);
       
       if (line[0] === 'S' && line[1] === 'P')
       {
@@ -277,8 +279,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       else if (line[0] === 'P' && line[1] === 'U' && line[2] != ';')
       {
-        let x = parseInt(parms[2]);
-        let y = parseInt(parms[3]);
+        const x = parseInt(parms[2]);
+        const y = parseInt(parms[3]);
 
         paths.pathCount++;
         paths.x[paths.totalPointCount] = x;
@@ -288,8 +290,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       else if (line[0] === 'P' && line[1] === 'D' && line[2] != ';')
       {
-        let x = parseInt(parms[2]);
-        let y = parseInt(parms[3]);
+        const x = parseInt(parms[2]);
+        const y = parseInt(parms[3]);
         
         paths.x[paths.totalPointCount] = x;
         paths.y[paths.totalPointCount++] = y;
@@ -338,11 +340,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    let dx = maxX - minX;
-		let dy = maxY - minY;
+    const dx = maxX - minX;
+		const dy = maxY - minY;
 
-		let sx = dx / (canvas.width - 100);
-		let sy = dy / (canvas.height - 100);
+		const sx = dx / (canvas.width - 100);
+		const sy = dy / (canvas.height - 100);
 
 		if(sx > sy)
 		{
@@ -482,19 +484,19 @@ document.addEventListener('DOMContentLoaded', function() {
       colorCode = 0;
     }
 
-    colorString = {
-      0: "white",
-      1: "lightgreen",
-      2: "purple",
-      3: "yellow",
-      4: "skyblue",
-      5: "deepskyblue",
-      6: "blue",
-      7: "orange",
-      8: "salmon",
-      9: "red",
-      10: "tan"
-    };
+    const colorString = [
+      "white",
+      "lightgreen",
+      "purple",
+      "yellow",
+      "skyblue",
+      "deepskyblue",
+      "blue",
+      "orange",
+      "salmon",
+      "red",
+       "tan"
+    ];
 
     return colorString[colorCode];
   }
