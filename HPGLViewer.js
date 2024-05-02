@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     colorCode: [],
     pointCounts: [],
     x: [],
-    y: []
+    y: [],
+    feedLength: []
   };
   
   const origin = {
@@ -39,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
     x: [],
     y: []
   };
+
+  let feedLengths = [];
 
   getOrigin();
 
@@ -265,6 +268,8 @@ document.addEventListener('DOMContentLoaded', function() {
   function getPaths(contents) {
     const lines = contents.split('\n');
     let currentColorCode = 0;
+    let feedLength = 0;
+    let feedCount = 0;
     paths.totalPointCount = 0;
     paths.pathCount = 0;
 
@@ -284,7 +289,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         paths.pathCount++;
         paths.x[paths.totalPointCount] = x;
-        paths.y[paths.totalPointCount++] = y;
+        paths.y[paths.totalPointCount] = y;
+        paths.feedLength[paths.totalPointCount++] = feedLength;
         paths.pointCounts[paths.pathCount - 1] = 1;
         paths.colorCode[paths.pathCount - 1] = currentColorCode;
       }
@@ -294,8 +300,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const y = parseInt(parms[3]);
         
         paths.x[paths.totalPointCount] = x;
-        paths.y[paths.totalPointCount++] = y;
+        paths.y[paths.totalPointCount] = y;
+        paths.feedLength[paths.totalPointCount++] = feedLength;
         paths.pointCounts[paths.pathCount - 1]++;
+      }
+      else if (line[0] === 'F' && line[1] === 'L' && line[2] != ';') {
+        feedLength += parseInt(parms[2]);
+        feedLengths[feedCount] = feedLength;
+        feedCount++;
       }
     }
   }
@@ -462,14 +474,16 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       ctx.beginPath();
       ctx.strokeStyle = selectColor(paths.colorCode[p]);
-      let px = paths.x[index] / scale + offsetX;
+      let x = paths.x[index] + paths.feedLength[index];
+      let px = x / scale + offsetX;
       let py = paths.y[index++] / scale + offsetY;
       py = canvas.height - py;
       ctx.moveTo(px, py);
       
       for (let k = 1; k < paths.pointCounts[p]; k++)
       {
-        px = paths.x[index] / scale + offsetX;
+        x = paths.x[index] + paths.feedLength[index];
+        px = x / scale + offsetX;
         py = paths.y[index++] / scale + offsetY;
         py = canvas.height - py;
         ctx.lineTo(px, py);
@@ -477,6 +491,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
       ctx.stroke();
     }
+
+    //Draw feeding lines.
+    let maxY = paths.y[0];
+    let minY = paths.y[0];
+    let margin = 20000;
+
+    for (let i = 1; i < paths.totalPointCount; i++) {
+      if (paths.y[i] < minY) {
+        minY = paths.y[i];
+      }
+
+      if (paths.y[i] > maxY) {
+        maxY = paths.y[i];
+      }
+    }
+
+    minY -= margin;
+    maxY += margin;
+
+    ctx.setLineDash([7, 5]);
+    ctx.strokeStyle = "deepskyblue";
+
+    for (let i = 0; i < feedLengths.length; i++) {
+      ctx.beginPath();
+      
+      let px = feedLengths[i] / scale + offsetX;
+      let py = minY / scale + offsetY;
+      py = canvas.height - py;
+      ctx.moveTo(px, py);
+
+      py = maxY / scale + offsetY;
+      py = canvas.height - py;
+      ctx.lineTo(px, py);
+      
+      ctx.stroke();
+    }
+
+    ctx.setLineDash([0, 0]);
   }
 
   function selectColor(colorCode) {
